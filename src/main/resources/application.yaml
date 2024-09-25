@@ -1,0 +1,57 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: laboratory
+  mvc:
+    static-path-pattern: /static/**
+  freemarker:
+    expose-session-attributes: true
+
+  datasource:
+    url: jdbc:h2:./db/Laboratory;AUTO_SERVER=TRUE
+    username: admin
+    password: 12345
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:/db/changelog/master.yml
+
+  org:
+    springframework:
+      security: debug
+
+  output:
+    ansi:
+      enabled: always
+
+  mail:
+    host: smtp.gmail.com
+    username: attracctorrespond@gmail.com
+    password: jyby cblq fnaz yguh
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        security: debug
+      hibernate:
+        stat: trace
+  file:
+    path: logs
