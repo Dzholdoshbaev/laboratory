@@ -1,0 +1,227 @@
+databaseChangeLog:
+  - changeSet:
+      id: create authorities table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: authorities
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: authority
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create users table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: Boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority_id
+                  type: Long
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_authority_usr_id
+                    references: authorities(id)
+              - column:
+                  name: login
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: bio
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: avatar
+                  type: varchar(255)
+              - column:
+                  name: reset_password_token
+                  type: varchar(255)
+  - changeSet:
+      id: create posts table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: posts
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_user_id_for_author
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: image
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              -  column:
+                   name: likes
+                   type: Long
+                   constraints:
+                     nullable: false
+              - column:
+                  name: comments
+                  type: Long
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create comments table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: comments
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_post_id
+                    references: posts(id)
+                    nullable: false
+              - column:
+                  name: commentator_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_commentator_id
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: comment
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create followers table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: followers
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_user_id_followers
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: follower_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_follower_id_followers
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+  - changeSet:
+      id: create likes table
+      author: Chyngyz Dzholdoshbaev
+      changes:
+        - createTable:
+            tableName: likes
+            columns:
+              - column:
+                  name: id
+                  type: Long
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_post_id_likes
+                    references: posts(id)
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: Long
+                  constraints:
+                    foreignKeyName: fk_for_user_id_likes
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: liked_at
+                  type: TIMESTAMP
+
+
+
