@@ -3,6 +3,7 @@ package dzholdoshbaev.laboratory.controller;
 
 
 import dzholdoshbaev.laboratory.dto.UsersDto;
+import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
 import dzholdoshbaev.laboratory.service.AuthoritiesService;
 import dzholdoshbaev.laboratory.service.UsersService;
@@ -16,13 +17,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Controller
@@ -39,6 +39,18 @@ public class ProfileController {
         Users user = usersService.getUserByEmail(username);
         model.addAttribute("userDto", user);
         return "auth/profile";
+    }
+
+    @GetMapping("/{userId}")
+    public String profile(@PathVariable Long userId, Model model) {
+        Optional<Users> users = usersService.getUserById(userId);
+        if(users.isEmpty()){
+            throw new NoSuchElementException("no such user found");
+        }
+        List<Posts> usersPosts = usersService.getAllUsersPosts(users.get());
+        model.addAttribute("userDto", users.get());
+        model.addAttribute("usersPosts", usersPosts);
+        return "microgram/userProfile";
     }
 
 

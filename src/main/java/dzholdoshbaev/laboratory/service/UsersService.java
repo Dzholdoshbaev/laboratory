@@ -3,6 +3,7 @@ package dzholdoshbaev.laboratory.service;
 
 
 import dzholdoshbaev.laboratory.dto.UsersDto;
+import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,4 +31,6 @@ public interface UsersService {
     Map<String, Object> forgotPassword(HttpServletRequest request);
 
     List<Users> searchUsers(String search);
+
+    List<Posts> getAllUsersPosts(Users users);
 }

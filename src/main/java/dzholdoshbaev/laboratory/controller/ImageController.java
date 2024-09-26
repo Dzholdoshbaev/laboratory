@@ -1,6 +1,7 @@
 package dzholdoshbaev.laboratory.controller;
 
 import dzholdoshbaev.laboratory.service.ImageService;
+import dzholdoshbaev.laboratory.service.PostImagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.security.Principal;
 public class ImageController {
 
     private final ImageService imageService;
+    private final PostImagesService postImagesService;
 
     @PostMapping
     public String uploadAvatar(@RequestParam("file") MultipartFile file , Principal principal, Model model) {
@@ -33,4 +35,25 @@ public class ImageController {
     public ResponseEntity<?> download(@PathVariable String title) {
         return imageService.downloadImage(title, MediaType.IMAGE_JPEG);
     }
+
+
+    @PostMapping("/post")
+    public String uploadImages(@RequestParam("file") MultipartFile file , Principal principal, Model model) {
+        String username = principal.getName();
+        if(file.isEmpty()) {
+            return "redirect:/profile";
+        }
+        postImagesService.uploadImage(file,username);
+        return "redirect:/profile";
+    }
+
+
+    @GetMapping("/post/{title}")
+    public ResponseEntity<?> downloadImages(@PathVariable String title) {
+        return postImagesService.downloadImage(title, MediaType.IMAGE_JPEG);
+    }
+
+
+
+
 }

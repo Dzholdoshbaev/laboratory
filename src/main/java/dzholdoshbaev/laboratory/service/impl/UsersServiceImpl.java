@@ -6,8 +6,10 @@ import dzholdoshbaev.laboratory.common.Utilities;
 import dzholdoshbaev.laboratory.constants.Authority;
 import dzholdoshbaev.laboratory.dto.UsersDto;
 import dzholdoshbaev.laboratory.model.Authorities;
+import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
 import dzholdoshbaev.laboratory.repository.AuthoritiesRepository;
+import dzholdoshbaev.laboratory.repository.PostsRepository;
 import dzholdoshbaev.laboratory.repository.UsersRepository;
 import dzholdoshbaev.laboratory.service.UsersService;
 import jakarta.mail.MessagingException;
@@ -31,6 +33,7 @@ public class UsersServiceImpl implements UsersService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final AuthoritiesRepository authoritiesRepository;
     private final EmailService emailService;
+    private final PostsRepository postsRepository;
 
     @Override
     public void createUser(UsersDto usersDto) {
@@ -106,6 +109,11 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<Users> searchUsers(String keyword) {
         return usersRepository.findByLoginContainingOrNameContainingOrEmailContaining(keyword, keyword, keyword);
+    }
+
+    @Override
+    public List<Posts> getAllUsersPosts(Users  users) {
+        return postsRepository.findAllByAuthorId(users.getId());
     }
 
     @Override
