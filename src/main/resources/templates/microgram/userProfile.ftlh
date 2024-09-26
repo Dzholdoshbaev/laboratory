@@ -11,6 +11,16 @@
                 <h3 class="card-title">${userDto.name!"Not specified"}</h3>
                 <p class="card-text"><strong>Login:</strong> ${userDto.login!"Not specified"}</p>
                 <p class="card-text"><strong>Bio:</strong> ${userDto.bio!"Not specified"}</p>
+                <#assign known = SPRING_SECURITY_CONTEXT??>
+                <#if known>
+                    <#assign
+                    user = SPRING_SECURITY_CONTEXT.authentication.principal
+                    name = user.getUsername()
+                    >
+                    <button class="btn btn-outline-primary btn-sm">Follow</button>
+                <#else>
+                    <p>You have to authorize yourself to follow</p>
+                </#if>
             </div>
         </div>
     </div>
@@ -41,8 +51,7 @@
                                 <button class="btn btn-outline-primary btn-sm">Comment</button>
                                 <button class="btn btn-outline-success btn-sm">Like</button>
                             <#else>
-                                <a href="/auth/login" class="btn btn-outline-info m-2">Login</a>
-                                <a href="/profile/register" class="btn btn-outline-info m-2">Register</a>
+                                <p>You have to authorize yourself to like and comment</p>
                             </#if>
                         </div>
                     </div>
