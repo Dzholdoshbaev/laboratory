@@ -28,4 +28,6 @@ public interface UsersService {
     void editResume(UsersDto usersDto ,String userEmail);
 
     Map<String, Object> forgotPassword(HttpServletRequest request);
+
+    List<Users> searchUsers(String search);
 }

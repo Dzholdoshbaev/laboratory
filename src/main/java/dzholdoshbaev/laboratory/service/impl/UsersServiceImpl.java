@@ -104,6 +104,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public List<Users> searchUsers(String keyword) {
+        return usersRepository.findByLoginContainingOrNameContainingOrEmailContaining(keyword, keyword, keyword);
+    }
+
+    @Override
     public Map<String, Object> resetPasswordGet(String token) {
         Map<String, Object> model = new HashMap<>();
         try {

@@ -9,12 +9,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByEmail(String email);
+
+    List<Users> findByLoginContainingOrNameContainingOrEmailContaining(String login, String name, String email);
+
 
 
     @Transactional
