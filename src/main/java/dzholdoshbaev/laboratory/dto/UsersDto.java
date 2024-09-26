@@ -1,6 +1,7 @@
 package dzholdoshbaev.laboratory.dto;
 
 import dzholdoshbaev.laboratory.annotations.UniqueEmail;
+import dzholdoshbaev.laboratory.annotations.UniqueLogin;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class UsersDto {
     private String name;
     @NotBlank(message = "Should be not blank")
     private String bio;
+    @UniqueLogin
     @NotBlank(message = "Should be not blank")
     private String login;
     @UniqueEmail
