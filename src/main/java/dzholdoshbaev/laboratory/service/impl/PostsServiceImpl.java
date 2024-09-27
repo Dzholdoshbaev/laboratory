@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,7 +32,9 @@ public class PostsServiceImpl implements PostsService {
             followingPost.addAll(postsByFollowing);
         }
 
-        return followingPost;
+        return followingPost.stream()
+                .sorted(Comparator.comparing(Posts::getCreatedAt).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
