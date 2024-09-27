@@ -38,12 +38,12 @@ public class ImageController {
 
 
     @PostMapping("/post")
-    public String uploadImages(@RequestParam("file") MultipartFile file , Principal principal, Model model) {
+    public String uploadImages(@RequestParam("file") MultipartFile file ,@RequestParam("description") String description, Principal principal, Model model) {
         String username = principal.getName();
-        if(file.isEmpty()) {
+        if(file.isEmpty() || description.isEmpty()) {
             return "redirect:/profile";
         }
-        postImagesService.uploadImage(file,username);
+        postImagesService.uploadImage(file,username,description);
         return "redirect:/profile";
     }
 

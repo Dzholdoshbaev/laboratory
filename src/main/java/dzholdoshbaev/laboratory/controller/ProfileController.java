@@ -37,6 +37,8 @@ public class ProfileController {
     public String profile(Model model, Principal principal) {
         String username = principal.getName();
         Users user = usersService.getUserByEmail(username);
+        List<Posts> usersPosts  =  usersService.getAllUsersPosts(user);
+        model.addAttribute("usersPosts", usersPosts);
         model.addAttribute("userDto", user);
         return "auth/profile";
     }
