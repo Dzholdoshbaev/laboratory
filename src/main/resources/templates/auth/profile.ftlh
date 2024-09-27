@@ -192,7 +192,7 @@
                                 name = user.getUsername()
                                 >
                                 <a href="posts/delete/${post.id}" class="btn btn-danger btn-sm">Delete</a>
-                                <a href="#" class="btn btn-primary btn-sm">Comment</a>
+                                <a href="/comment/${post.id}" class="btn btn-primary btn-sm">Comment</a>
                             <#else>
                                 <p>You have to authorize yourself to like and comment</p>
                             </#if>

@@ -2,6 +2,7 @@ package dzholdoshbaev.laboratory.service.impl;
 
 import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
+import dzholdoshbaev.laboratory.repository.CommentsRepository;
 import dzholdoshbaev.laboratory.repository.FollowersRepository;
 import dzholdoshbaev.laboratory.repository.PostsRepository;
 import dzholdoshbaev.laboratory.service.PostsService;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class PostsServiceImpl implements PostsService {
     private final PostsRepository postsRepository;
     private final FollowersRepository followersRepository;
+    private final CommentsRepository commentsRepository;
     @Override
     public List<Posts> findAllFollowingPosts(Users user) {
 
@@ -40,6 +42,7 @@ public class PostsServiceImpl implements PostsService {
     @Override
     public void deletePost(Long postId) {
         postsRepository.deleteById(postId);
+        commentsRepository.deleteByPostId(postId);
     }
 
 }
