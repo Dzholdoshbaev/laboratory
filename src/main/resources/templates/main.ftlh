@@ -48,8 +48,8 @@
             </div>
 
             <div class="col col-12 col-md-6 colpost">
-                <p class="mt-3"><strong class="poststrong">Create an account and then open a new resume for different opportunities</strong></p>
-                <p class="postp-2">Make a Business it is easy open new vacancy for your company and start growing with us together!</p>
+                <p class="mt-3"><strong class="poststrong">Create an account and then open a new different opportunities With MICROGRAM!</strong></p>
+                <p class="postp-2">Make a Business it is easy open and start growing with us together!</p>
             </div>
         </div>
 
