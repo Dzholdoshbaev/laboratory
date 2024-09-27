@@ -50,19 +50,6 @@
                         <div class="post-interactions">
                             <span><strong>Comments:</strong> ${post.comments}</span>
                             <span><strong>Likes:</strong> ${post.likes}</span>
-                            <div class="post-buttons">
-                                <#assign known = SPRING_SECURITY_CONTEXT??>
-                                <#if known>
-                                    <#assign
-                                    user = SPRING_SECURITY_CONTEXT.authentication.principal
-                                    name = user.getUsername()
-                                    >
-                                    <a href="#" class="btn btn-primary btn-sm">Comment</a>
-                                    <a href="#" class="btn btn-success btn-sm">Like</a>
-                                <#else>
-                                    <p>You have to authorize yourself to like and comment</p>
-                                </#if>
-                            </div>
                         </div>
                     </div>
                 </li>
@@ -128,13 +115,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .post-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-outline-info {
-            margin-top: 10px;
         }
         .card-title {
             font-size: 1.5rem;

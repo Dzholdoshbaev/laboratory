@@ -28,7 +28,7 @@
                                 <#assign known = SPRING_SECURITY_CONTEXT??>
                                 <#if known>
                                     <a href="#" class="btn btn-primary btn-sm">Comment</a>
-                                    <a href="#" class="btn btn-success btn-sm">Like</a>
+                                    <a href="/like/${post.id}" class="btn btn-success btn-sm">Like</a>
                                 <#else>
                                     <p>You have to authorize yourself to like and comment</p>
                                 </#if>
