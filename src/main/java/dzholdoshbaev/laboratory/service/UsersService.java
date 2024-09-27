@@ -2,6 +2,7 @@ package dzholdoshbaev.laboratory.service;
 
 
 
+import dzholdoshbaev.laboratory.dto.UserCount;
 import dzholdoshbaev.laboratory.dto.UsersDto;
 import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
@@ -33,4 +34,6 @@ public interface UsersService {
     List<Users> searchUsers(String search);
 
     List<Posts> getAllUsersPosts(Users users);
+
+    UserCount getUserCount(Users user);
 }

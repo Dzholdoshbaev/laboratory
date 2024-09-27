@@ -119,6 +119,7 @@
             <h3 class="card-title">${userDto.name!"Not specified"}</h3>
             <p class="card-text"><strong>Login:</strong> ${userDto.login!"Not specified"}</p>
             <p class="card-text"><strong>Bio:</strong> ${userDto.bio!"Not specified"}</p>
+            <p class="card-text"><strong>Followers:</strong> ${userCount.followersCount!"Not specified"} <strong>Posts:</strong>${userCount.publicationCount!"Not specified"}    <strong>Following:</strong> ${userCount.followingCount!"Not specified"}  </p>
             <a href="profile/edit" class="btn btn-outline-info mt-3">Edit profile</a>
         </div>
     </div>

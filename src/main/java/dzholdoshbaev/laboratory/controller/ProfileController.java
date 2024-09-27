@@ -2,6 +2,7 @@ package dzholdoshbaev.laboratory.controller;
 
 
 
+import dzholdoshbaev.laboratory.dto.UserCount;
 import dzholdoshbaev.laboratory.dto.UsersDto;
 import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
@@ -38,8 +39,10 @@ public class ProfileController {
         String username = principal.getName();
         Users user = usersService.getUserByEmail(username);
         List<Posts> usersPosts  =  usersService.getAllUsersPosts(user);
+        UserCount userCount = usersService.getUserCount(user);
         model.addAttribute("usersPosts", usersPosts);
         model.addAttribute("userDto", user);
+        model.addAttribute("userCount", userCount);
         return "auth/profile";
     }
 

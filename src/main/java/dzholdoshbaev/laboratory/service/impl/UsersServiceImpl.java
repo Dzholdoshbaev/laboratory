@@ -4,11 +4,13 @@ package dzholdoshbaev.laboratory.service.impl;
 
 import dzholdoshbaev.laboratory.common.Utilities;
 import dzholdoshbaev.laboratory.constants.Authority;
+import dzholdoshbaev.laboratory.dto.UserCount;
 import dzholdoshbaev.laboratory.dto.UsersDto;
 import dzholdoshbaev.laboratory.model.Authorities;
 import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
 import dzholdoshbaev.laboratory.repository.AuthoritiesRepository;
+import dzholdoshbaev.laboratory.repository.FollowersRepository;
 import dzholdoshbaev.laboratory.repository.PostsRepository;
 import dzholdoshbaev.laboratory.repository.UsersRepository;
 import dzholdoshbaev.laboratory.service.UsersService;
@@ -34,6 +36,7 @@ public class UsersServiceImpl implements UsersService {
     private final AuthoritiesRepository authoritiesRepository;
     private final EmailService emailService;
     private final PostsRepository postsRepository;
+    private final FollowersRepository followersRepository;
 
     @Override
     public void createUser(UsersDto usersDto) {
@@ -114,6 +117,15 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<Posts> getAllUsersPosts(Users  users) {
         return postsRepository.findAllByAuthorId(users.getId());
+    }
+
+    @Override
+    public UserCount getUserCount(Users user) {
+        UserCount userCount = new UserCount();
+        userCount.setPublicationCount( postsRepository.findAllByAuthorId(user.getId()).size());
+        userCount.setFollowingCount( followersRepository.findAllByFollower(user).size());
+        userCount.setFollowersCount( followersRepository.findAllFollowersByUser(user).size());
+        return userCount;
     }
 
     @Override
