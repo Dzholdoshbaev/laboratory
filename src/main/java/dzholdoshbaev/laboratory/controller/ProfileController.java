@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,14 +48,30 @@ public class ProfileController {
     }
 
     @GetMapping("/{userId}")
-    public String profile(@PathVariable Long userId, Model model) {
-        Optional<Users> users = usersService.getUserById(userId);
-        if(users.isEmpty()){
-            throw new NoSuchElementException("no such user found");
+    public String userProfile(@PathVariable Long userId, Model model, Principal principal) {
+
+        if (principal != null) {
+            Users user = usersService.getUserByEmail(principal.getName());
+            Users profileUser = usersService.getUserById(userId)
+                    .orElseThrow(() -> new NoSuchElementException("No such user found"));
+            List<Posts> usersPosts = usersService.getAllUsersPosts(profileUser);
+            boolean isFollow = usersService.checkFollow(user, profileUser);
+            model.addAttribute("userDto", profileUser);
+            model.addAttribute("usersPosts", usersPosts);
+            model.addAttribute("isFollow", isFollow);
+        }else {
+            Users profileUser = usersService.getUserById(userId)
+                    .orElseThrow(() -> new NoSuchElementException("No such user found"));
+            List<Posts> usersPosts = usersService.getAllUsersPosts(profileUser);
+            if(usersPosts.isEmpty()) {
+                model.addAttribute("userDto", profileUser);
+                model.addAttribute("usersPosts", new ArrayList<>());
+                model.addAttribute("isFollow", false);
+            }
+            model.addAttribute("userDto", profileUser);
+            model.addAttribute("usersPosts", usersPosts);
+            model.addAttribute("isFollow", false);
         }
-        List<Posts> usersPosts = usersService.getAllUsersPosts(users.get());
-        model.addAttribute("userDto", users.get());
-        model.addAttribute("usersPosts", usersPosts);
         return "microgram/userProfile";
     }
 

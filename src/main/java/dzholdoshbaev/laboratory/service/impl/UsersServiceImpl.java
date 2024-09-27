@@ -7,6 +7,7 @@ import dzholdoshbaev.laboratory.constants.Authority;
 import dzholdoshbaev.laboratory.dto.UserCount;
 import dzholdoshbaev.laboratory.dto.UsersDto;
 import dzholdoshbaev.laboratory.model.Authorities;
+import dzholdoshbaev.laboratory.model.Followers;
 import dzholdoshbaev.laboratory.model.Posts;
 import dzholdoshbaev.laboratory.model.Users;
 import dzholdoshbaev.laboratory.repository.AuthoritiesRepository;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -126,6 +128,20 @@ public class UsersServiceImpl implements UsersService {
         userCount.setFollowingCount( followersRepository.findAllByFollower(user).size());
         userCount.setFollowersCount( followersRepository.findAllFollowersByUser(user).size());
         return userCount;
+    }
+
+    @Override
+    public boolean checkFollow(Users user, Users followUser) {
+        return followersRepository.findByUsersAndFollower(user, followUser).isPresent();
+    }
+
+    @Override
+    public void createFollowing(Users user, Users followUser) {
+        Followers followers = new Followers();
+        followers.setUsers(followUser);
+        followers.setFollower(user);
+        followers.setCreatedAt(LocalDateTime.now());
+        followersRepository.save(followers);
     }
 
     @Override

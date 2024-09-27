@@ -36,4 +36,8 @@ public interface UsersService {
     List<Posts> getAllUsersPosts(Users users);
 
     UserCount getUserCount(Users user);
+
+    boolean checkFollow(Users user, Users followUser);
+
+    void createFollowing(Users user, Users followUser);
 }

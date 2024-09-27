@@ -5,7 +5,7 @@
     <div class="container profile-container">
         <div class="row">
             <div class="col-md-4 text-center">
-                <img src="/images/${userDto.avatar}" alt="ProfilePhoto" class="profile-img"/>
+                <img src="/images/${userDto.avatar!"default-avatar.png"}" alt="ProfilePhoto" class="profile-img"/>
             </div>
             <div class="col-md-8">
                 <h3 class="card-title">${userDto.name!"Not specified"}</h3>
@@ -17,7 +17,11 @@
                     user = SPRING_SECURITY_CONTEXT.authentication.principal
                     name = user.getUsername()
                     >
-                    <button class="btn btn-outline-primary btn-sm">Follow</button>
+                    <#if isFollow>
+                        <p>Followed</p>
+                    <#else>
+                        <a href="/follow/${userDto.id}" class="btn btn-outline-primary btn-sm" id="logout">Follow</a>
+                    </#if>
                 <#else>
                     <p>You have to authorize yourself to follow</p>
                 </#if>
@@ -25,40 +29,46 @@
         </div>
     </div>
 
-    <ul class="post-list mt-4">
-        <#list usersPosts as post>
-            <li class="post-item">
-                <div class="post-header">
-                    <img src="/images/${userDto.avatar}" alt="User Avatar" class="post-user-avatar"/>
-                    <div class="post-user-info">
-                        <strong>${userDto.name!""}</strong>
-                        <span class="post-username">(${userDto.login!""})</span>
-                    </div>
-                </div>
-                <img src="/images/post/${post.image}" alt="Post Image" class="post-img"/>
-                <div class="post-content">
-                    <p class="post-description"><strong>Description:</strong> ${post.description}</p>
-                    <div class="post-interactions">
-                        <span><strong>Comments:</strong> ${post.comments}</span>
-                        <span><strong>Likes:</strong> ${post.likes}</span>
-                        <div class="post-buttons">
-                            <#assign known = SPRING_SECURITY_CONTEXT??>
-                            <#if known>
-                                <#assign
-                                user = SPRING_SECURITY_CONTEXT.authentication.principal
-                                name = user.getUsername()
-                                >
-                                <a href="#" class="btn btn-primary btn-sm">Comment</a>
-                                <a href="#" class="btn btn-success btn-sm">Like</a>
-                            <#else>
-                                <p>You have to authorize yourself to like and comment</p>
-                            </#if>
+    <#if usersPosts?has_content>
+        <ul class="post-list mt-4">
+            <#list usersPosts as post>
+                <li class="post-item">
+                    <div class="post-header">
+                        <#if userDto.avatar?? && userDto.avatar?has_content>
+                            <img src="/images/${userDto.avatar}" alt="User Avatar" class="post-user-avatar"/>
+                        <#else>
+                            <img src="/static/images/nophoto.jpg" alt="User Avatar" class="post-user-avatar"/>
+                        </#if>
+                        <div class="post-user-info">
+                            <strong>${userDto.name!""}</strong>
+                            <span class="post-username">(${userDto.login!""})</span>
                         </div>
                     </div>
-                </div>
-            </li>
-        </#list>
-    </ul>
+                    <img src="/images/post/${post.image}" alt="Post Image" class="post-img"/>
+                    <div class="post-content">
+                        <p class="post-description"><strong>Description:</strong> ${post.description}</p>
+                        <div class="post-interactions">
+                            <span><strong>Comments:</strong> ${post.comments}</span>
+                            <span><strong>Likes:</strong> ${post.likes}</span>
+                            <div class="post-buttons">
+                                <#assign known = SPRING_SECURITY_CONTEXT??>
+                                <#if known>
+                                    <#assign
+                                    user = SPRING_SECURITY_CONTEXT.authentication.principal
+                                    name = user.getUsername()
+                                    >
+                                    <a href="#" class="btn btn-primary btn-sm">Comment</a>
+                                    <a href="#" class="btn btn-success btn-sm">Like</a>
+                                <#else>
+                                    <p>You have to authorize yourself to like and comment</p>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </#list>
+        </ul>
+    </#if>
 
     <style>
         .profile-container {

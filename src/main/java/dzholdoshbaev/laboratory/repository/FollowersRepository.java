@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FollowersRepository extends JpaRepository<Followers, Long> {
@@ -19,4 +20,5 @@ public interface FollowersRepository extends JpaRepository<Followers, Long> {
     List<Users> findAllFollowersByUser(Users users);
 
 
+    Optional<Followers> findByUsersAndFollower(Users user, Users follower);
 }
