@@ -48,5 +48,7 @@ public class CommentServiceImpl implements CommentService {
         comments1.setCommentator(users);
         comments1.setCreatedAt(LocalDateTime.now());
         commentsRepository.save(comments1);
+        posts.setComments(posts.getComments() + 1);
+        postsRepository.save(posts);
     }
 }
