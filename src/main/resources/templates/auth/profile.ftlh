@@ -48,11 +48,44 @@
         .post-item {
             margin-bottom: 30px;
         }
-        .post-buttons button {
+        .post-buttons .btn {
             margin-right: 10px;
+            min-width: 80px;
         }
         .navbar {
             margin-bottom: 30px;
+        }
+        .delete-post-btn {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .form-outline {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-outline .form-label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .form-outline input[type="text"] {
+            margin-bottom: 10px;
+        }
+        .btn-outline-info {
+            margin-top: 10px;
+        }
+        .post-creation {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .post-creation h4 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -119,25 +152,28 @@
             <h3 class="card-title">${userDto.name!"Not specified"}</h3>
             <p class="card-text"><strong>Login:</strong> ${userDto.login!"Not specified"}</p>
             <p class="card-text"><strong>Bio:</strong> ${userDto.bio!"Not specified"}</p>
-            <p class="card-text"><strong>Followers:</strong> ${userCount.followersCount!"Not specified"} <strong>Posts:</strong>${userCount.publicationCount!"Not specified"}    <strong>Following:</strong> ${userCount.followingCount!"Not specified"}  </p>
+            <p class="card-text"><strong>Followers:</strong> ${userCount.followersCount!"Not specified"} <strong>Posts:</strong> ${userCount.publicationCount!"Not specified"} <strong>Following:</strong> ${userCount.followingCount!"Not specified"}</p>
             <a href="profile/edit" class="btn btn-outline-info mt-3">Edit profile</a>
         </div>
     </div>
 </div>
 
 <div class="container mt-5">
-    <form action="/images/post" method="post" enctype="multipart/form-data" class="mb-4">
-        <#if _csrf??>
-            <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
-                   value="${(_csrf.token)!'csrf-token'}"/>
-        </#if>
-        <input type="file" name="file" class="form-control-file mb-3"/>
-        <div class="form-outline mb-4">
-            <label class="form-label" for="form2Example1">Description</label>
-            <input type="text" id="form2Example1" class="form-control" name="description"/>
-        </div>
-        <button type="submit" class="btn btn-outline-info">Post Publication</button>
-    </form>
+    <div class="post-creation">
+        <h4>Create a Post</h4>
+        <form action="/images/post" method="post" enctype="multipart/form-data" class="mb-4">
+            <#if _csrf??>
+                <input type="hidden" name="${(_csrf.parameterName)!'csrf-param-name'}"
+                       value="${(_csrf.token)!'csrf-token'}"/>
+            </#if>
+            <input type="file" name="file" class="form-control-file mb-3"/>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form2Example1">Description</label>
+                <input type="text" id="form2Example1" class="form-control" name="description"/>
+            </div>
+            <button type="submit" class="btn btn-outline-info">Post Publication</button>
+        </form>
+    </div>
 
     <ul class="post-list">
         <#list usersPosts as post>
@@ -155,8 +191,9 @@
                                 user = SPRING_SECURITY_CONTEXT.authentication.principal
                                 name = user.getUsername()
                                 >
-                                <button class="btn btn-outline-primary btn-sm">Comment</button>
-                                <button class="btn btn-outline-success btn-sm">Like</button>
+                                <a href="posts/delete/${post.id}" class="btn btn-danger btn-sm">Delete</a>
+                                <button class="btn btn-primary btn-sm">Comment</button>
+                                <button class="btn btn-success btn-sm">Like</button>
                             <#else>
                                 <p>You have to authorize yourself to like and comment</p>
                             </#if>

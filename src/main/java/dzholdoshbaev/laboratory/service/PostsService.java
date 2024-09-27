@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PostsService {
     List<Posts> findAllFollowingPosts(Users user);
+
+    void deletePost(Long postId);
 }
