@@ -48,8 +48,8 @@
                                 user = SPRING_SECURITY_CONTEXT.authentication.principal
                                 name = user.getUsername()
                                 >
-                                <button class="btn btn-outline-primary btn-sm">Comment</button>
-                                <button class="btn btn-outline-success btn-sm">Like</button>
+                                <a href="#" class="btn btn-primary btn-sm">Comment</a>
+                                <a href="#" class="btn btn-success btn-sm">Like</a>
                             <#else>
                                 <p>You have to authorize yourself to like and comment</p>
                             </#if>
