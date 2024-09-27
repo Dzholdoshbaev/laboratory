@@ -14,10 +14,10 @@ VALUES
 
 INSERT INTO posts (author_id, image, description, likes, comments, created)
 VALUES
-    ((SELECT id FROM users WHERE login = 'Chyngyz_official'), '8b653696-56ea-4a41-8b75-82a98a4b55c7_1579611305_2-p-svyashchennaya-kaaba-2.jpg', 'Holy Kaaba most popular place for muslims', 0, 0, CURRENT_TIMESTAMP),
-    ((SELECT id FROM users WHERE login = 'elena_official'), 'samarkand.jpeg', 'Samarkand very famous and old place in uzbekistan', 0, 0, CURRENT_TIMESTAMP),
+    ((SELECT id FROM users WHERE login = 'Chyngyz_official'), '8b653696-56ea-4a41-8b75-82a98a4b55c7_1579611305_2-p-svyashchennaya-kaaba-2.jpg', 'Holy Kaaba most popular place for muslims', 5, 3, CURRENT_TIMESTAMP),
+    ((SELECT id FROM users WHERE login = 'elena_official'), 'samarkand.jpeg', 'Samarkand very famous and old place in uzbekistan', 2, 1, CURRENT_TIMESTAMP),
     ((SELECT id FROM users WHERE login = 'sabina_official'), 'spbgu.jpeg', 'My university ;)', 0, 0, CURRENT_TIMESTAMP),
-    ((SELECT id FROM users WHERE login = 'victoria_official'), 'kids.jpeg', 'My Angels love you all !', 0, 0, CURRENT_TIMESTAMP),
+    ((SELECT id FROM users WHERE login = 'victoria_official'), 'kids.jpeg', 'My Angels love you all !', 2, 1, CURRENT_TIMESTAMP),
     ((SELECT id FROM users WHERE login = 'adam_official'), 's-l1200.jpg', 'Belt in the house alhamdullilah', 0, 0, CURRENT_TIMESTAMP),
     ((SELECT id FROM users WHERE login = 'egor_official'), '240709_HBME_112_FA24_Tier3_BMB_032_733x1222.jpeg', 'Hugo Boss new collection in sell right now go ahead to order !', 0, 0, CURRENT_TIMESTAMP);
 
